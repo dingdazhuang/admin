@@ -1,20 +1,100 @@
 <template>
-<div class="shareArea cflex">
-
-</div>
-
+    <div class="shareArea cflex">
+		<p class="shareTitle">分享组件一：横向排列</p>
+		<div class="bottom rflex">
+			<span class="toTitle">分享到：</span>
+			<ul class="shareUl rflex wflex">
+				<li>
+					<div class="item" @mouseover="showqrcode()" @mouseout="hideqrcode()">
+						<icon-svg icon-class="iconwechat" />
+					</div>
+					<div class="qrcodeArea" v-show="qrcode.show">
+						<p class="saoTitle">扫一扫</p>
+						<div class="qrcode" id="qrCodeUrl"></div>
+					</div>
+				</li>
+				<li>
+					<div class="item" @click="shareToWeibo()">
+						<icon-svg icon-class="iconweibo" />
+					</div>
+				</li>
+				<li>
+					<div class="item" @click="shareToQQ()">
+						<icon-svg icon-class="iconqq" />
+					</div>
+				</li>
+				<li>
+					<div class="item" @click="shareToQQzone()">
+						<icon-svg icon-class="iconqq_zone" />
+					</div>
+				</li>
+			
+				<li>
+					<div class="item" @click="shareToDouban()">
+						<icon-svg icon-class="icondouban" />
+					</div>
+				</li>
+			</ul>
+		</div>
+    </div>
 </template>
 
 <script>
+	import QRCode from 'qrcodejs2'
+	import { shareUrl } from "@/utils/env";
 
+	export default {
+	  name:'YanShare',
+	  data(){
+			return {
+				qrcode:{
+					show:false
+				},
+				qrcodeObj:{
+					text:shareUrl, // 要分享的网页路径
+					width:80,
+					height:80,
+					colorDark: '#000000',
+					colorLight: '#ffffff',
+					correctLevel: QRCode.CorrectLevel.H
+				}
+				
+			}
+		},
+		mounted(){
+			this.creatQrCode();
+		},
+		methods: {
+			showqrcode(){
+				this.qrcode.show  = true;
+			},
+			hideqrcode(){
+				this.qrcode.show  = false;
+			},
+			creatQrCode() {
+				this.$nextTick(() => {
+					new QRCode(document.getElementById('qrCodeUrl'), this.qrcodeObj)
+				});				
+			},
+			shareToQQ(){
+                this.$emit('shareToQQ');
+			},
+			shareToQQzone(){
+                this.$emit('shareToQQzone');
+			},
+			shareToWeibo(){
+                this.$emit('shareToWeibo');
+            },
+			shareToDouban(){
+                this.$emit('shareToDouban');
+			}
 
-export default {
-    
-}
-</script>>
+		}
+	}
+</script>
 
-<style lang="scss" scoped>
-.shareArea{
+<style lang="less" scoped>
+	.shareArea{
 		width: 340px;
 		align-items: center;
 		background: #fff;
@@ -84,4 +164,5 @@ export default {
 		}
      
 	}
+	
 </style>

@@ -7,7 +7,7 @@
 
 
 export default {
-    
+    // import { wxCodeModal,  } from 'components/index'
 }
 </script>>
 
