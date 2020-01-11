@@ -102,7 +102,7 @@
 	}
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 	.shareArea{
 		width: 340px;
 		align-items: center;
